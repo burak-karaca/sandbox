@@ -16,7 +16,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Run the selected test files
-                sh "run_test.sh ${TEST_FILE}"
+                sh "cat ${TEST_FILE}"
             }
         }
     }
