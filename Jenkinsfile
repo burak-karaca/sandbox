@@ -10,6 +10,7 @@ pipeline {
                     def dynamicChoice = testFiles.collect { it }
                     // Add a parameterized build to select test files dynamically
                     input message: "Select the test files to run", parameters: [choice(name: 'TEST_FILE', choices: dynamicChoice.join('\n'), description: 'Choose the test file to run')]
+                    echo "${TEST_FILE}"
                 }
             }
         }
@@ -17,8 +18,9 @@ pipeline {
             steps {
                 // Print the content of the selected file
                 script {
-                    def fileContent = sh(script: "cat var/test1.txt", returnStdout: true).trim()
-                    echo "Content of the file test1.txt:"
+                    echo "${TEST_FILE}"
+                    def fileContent = sh(script: "cat var/${TEST_FILE}", returnStdout: true).trim()
+                    echo "Content of the file ${TEST_FILE}:"
                     echo "${fileContent}"
                 }
             }
