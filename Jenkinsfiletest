@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Select Files') {
+            steps {
+                input(
+                    id: 'UserInput',
+                    message: 'Select files to run:',
+                    parameters: [
+                        string(name: 'File1', defaultValue: '', description: 'Enter file name 1'),
+                        string(name: 'File2', defaultValue: '', description: 'Enter file name 2'),
+                        // Add more parameters as needed
+                    ]
+                )
+            }
+        }
+
+        stage('Run Selected Files') {
+            steps {
+                // Add your build steps here using the selected file names
+                // For example:
+                sh 'echo "Running selected files: ${params.File1} ${params.File2}"'
+            }
+        }
+    }
+}
