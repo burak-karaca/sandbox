@@ -22,7 +22,7 @@ pipeline {
             steps {
                 // Print the content of the selected file
                 script {
-                    sh "cat var/${userInput}"
+                    sh "cat var/${env.userInput}"
                 }
             }
         }
