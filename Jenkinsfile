@@ -13,10 +13,14 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
+        stage('Print File Content') {
             steps {
-                // Run the selected test files
-            sh "cat var/${TEST_FILE}"
+                // Print the content of the selected file
+                script {
+                    def fileContent = sh(script: "cat var/${TEST_FILE}", returnStdout: true).trim()
+                    echo "Content of the file ${TEST_FILE}:"
+                    echo "${fileContent}"
+                }
             }
         }
     }
