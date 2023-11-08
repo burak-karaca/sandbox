@@ -11,7 +11,7 @@ pipeline {
                     // Add a parameterized build to select test files dynamically
                     def userInput = input(
                         message: "Select the test files to run",
-                        parameters: [choice(name: 'TEST_FILE', choices: dynamicChoice.join('\n'), description: 'Choose the test file to run')]
+                        parameters: [extendedChoice(name: 'TEST_FILE', multiSelectDelimiter: ',', type: 'PT_CHECKBOX', description: 'Choose the test file to run', value: dynamicChoice)]
                     )
                     echo "Chosen test file: ${userInput}"
                     sh "cat var/${userInput}"
