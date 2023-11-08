@@ -22,9 +22,7 @@ pipeline {
             steps {
                 // Print the content of the selected file
                 script {
-                    def fileContent = sh(script: "cat var/${userInput}", returnStdout: true).trim()
-                    echo "Content of the file ${userInput}:"
-                    echo "${fileContent}"
+                    sh "cat var/${userInput}"
                 }
             }
         }
