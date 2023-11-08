@@ -17,7 +17,7 @@ pipeline {
             steps {
                 // Print the content of the selected file
                 script {
-                    def fileContent = sh(script: "cat var/${TEST_FILE}", returnStdout: true).trim()
+                    def fileContent = readFile(file: "var/${TEST_FILE}").trim()
                     echo "Content of the file ${TEST_FILE}:"
                     echo "${fileContent}"
                 }
