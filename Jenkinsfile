@@ -15,8 +15,8 @@ pipeline {
                     )
                     echo "Chosen test file: ${userInput}"
                     sh "cat var/${userInput}"
-                    env.envUserInput = ${userInput}
                 }
+                env.envUserInput = ${userInput}
             }
         }
         stage('Print File Content') {
