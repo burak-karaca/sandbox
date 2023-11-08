@@ -1,62 +1,36 @@
-properties([
-parameters([
-    [$class: 'ChoiceParameter', 
-        choiceType: 'PT_SINGLE_SELECT', 
-        description: 'Select the Env Name from the Dropdown List', 
-        filterLength: 1, 
-        filterable: true, 
-        name: 'Env', 
-        randomName: 'choice-parameter-5631314439613978', 
-        script: [
-            $class: 'GroovyScript', 
-            fallbackScript: [
-                classpath: [], 
-                sandbox: false, 
-                script: 
-                    'return[\'Could not get Env\']'
-            ], 
-            script: [
-                classpath: [], 
-                sandbox: false, 
-                script: 
-                    'return["Dev","QA","Stage","Prod"]'
-            ]
-        ]
-    ], 
-    [$class: 'CascadeChoiceParameter', 
-        choiceType: 'PT_CHECKBOX', 
-        description: 'Select Servers', 
-        filterLength: 1, 
-        filterable: true, 
-        name: 'Server', 
-        randomName: 'choice-parameter-5631314456178619', 
-        referencedParameters: 'Env', 
-        script: [
-            $class: 'GroovyScript', 
-            fallbackScript: [
-                classpath: [], 
-                sandbox: false, 
-                script: 
-                    'return[\'Could not get Environment from Env Param\']'
-            ], 
-            script: [
-                classpath: [], 
-                sandbox: false, 
-                script: 
-                    ''' if (Env.equals("Dev")){
-                            return["devaaa001","devaaa002","devbbb001","devbbb002","devccc001","devccc002"]
-                        }
-                        else if(Env.equals("QA")){
-                            return["qaaaa001","qabbb002","qaccc003"]
-                        }
-                        else if(Env.equals("Stage")){
-                            return["staaa001","stbbb002","stccc003"]
-                        }
-                        else if(Env.equals("Prod")){
-                            return["praaa001","prbbb002","prccc003"]
-                        }
-                    '''
-            ]
-        ]
-    ]
-])
+pipeline {
+    agent any
+    stages {
+        stage('Select Tests') {
+            steps {
+                script {
+                    def testsToRun = input(
+                        id: 'userInput', message: 'Select tests to run',
+                        parameters: [
+                            choice(
+                                choices: 'unit_tests integration_tests system_tests',
+                                description: 'Select which tests to run',
+                                name: 'TEST_TYPE'
+                            )
+                        ]
+                    )
+                    echo "Running ${testsToRun}..."
+                    // Here you can add conditions to execute specific tests based on user input
+                    if (testsToRun == 'unit_tests') {
+                        // Execute unit tests
+                        sh 'run_unit_tests_command'
+                    } else if (testsToRun == 'integration_tests') {
+                        // Execute integration tests
+                        sh 'run_integration_tests_command'
+                    } else if (testsToRun == 'system_tests') {
+                        // Execute system tests
+                        sh 'run_system_tests_command'
+                    } else {
+                        error("Invalid test type selected: ${testsToRun}")
+                    }
+                }
+            }
+        }
+        // Add more stages for the rest of your pipeline
+    }
+}
