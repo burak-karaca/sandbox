@@ -14,6 +14,7 @@ pipeline {
                         parameters: [choice(name: 'TEST_FILE', choices: dynamicChoice.join('\n'), description: 'Choose the test file to run')]
                     )
                     echo "Chosen test file: ${userInput}"
+                    sh "cat var/${userInput}"
                 }
             }
         }
