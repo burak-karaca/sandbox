@@ -21,9 +21,8 @@ pipeline {
             steps {
                 // Print the content of the selected file
                 script {
-                    echo "${env.TEST_FILE}"
-                    def fileContent = sh(script: "cat var/${env.TEST_FILE}", returnStdout: true).trim()
-                    echo "Content of the file ${env.TEST_FILE}:"
+                    def fileContent = sh(script: "cat var/${userInput}", returnStdout: true).trim()
+                    echo "Content of the file ${userInput}:"
                     echo "${fileContent}"
                 }
             }
