@@ -16,7 +16,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Run the selected test files
-                sh "cat ${TEST_FILE}"
+                sh "cat var/${params.TEST_FILE}"
             }
         }
     }
