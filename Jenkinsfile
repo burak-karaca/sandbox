@@ -1,12 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout code from the GitHub repository
-                git 'https://github.com/burak-karaca/sandbox.git'
-            }
-        }
         stage('Choose Test Files') {
             steps {
                 script {
